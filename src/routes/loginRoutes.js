@@ -22,7 +22,7 @@ const validateLoginData = (req, res, next) => {
     next();
 };
 
-router.post('/', validateLoginData, (req, res) => {
+router.post('/', validateLoginData, (_req, res) => {
   const token = (Math.random().toString(16).substr(2) + Math.random().toString(16).substr(2))
     .slice(0, 16);
   return res.status(200).json({ token });
