@@ -47,4 +47,20 @@ router.post('/',
     return res.status(201).json(newTalker);
 });
 
+router.put('/:id',
+  validateTalkerToken,
+  validateTalkerName,
+  validateTalkerAge,
+  validateTalk,
+  validateWatchedAt,
+  validateTalkRate,
+  async (req, res) => {
+    const { id } = req.params;
+    const { body } = req;
+    
+    const updatedTalker = await talker.updateTalker(Number(id), body);
+
+    return res.status(200).json(updatedTalker);
+});
+
 module.exports = router;
