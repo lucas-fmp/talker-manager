@@ -13,16 +13,31 @@ const {
   validateTalk,
   readTalkerFile,
   deleteTalker,
+  getAllTalkers,
+  getTalkerById,
 } = talker;
 
 router.get('/', async (_req, res) => {
-  const talkers = await talker.getAllTalkers();
+  const talkers = await getAllTalkers();
   res.status(200).json(talkers);
+});
+
+router.get('/search', validateTalkerToken, async (req, res) => {
+  const { q } = req.query;
+
+  const allTalkers = await readTalkerFile();
+
+  const filteredTalkers = allTalkers.filter((e) => e.name.includes(q));
+
+  if (!q) {
+    return res.status(200).json(allTalkers);
+  }
+  return res.status(200).json(filteredTalkers);
 });
 
 router.get('/:id', async (req, res) => {
   const id = Number(req.params.id);
-  const talkerById = await talker.getTalkerById(id);
+  const talkerById = await getTalkerById(id);
   if (talkerById) {
     return res.status(200).json(talkerById);
   } 
