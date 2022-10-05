@@ -14,9 +14,9 @@ router.get('/:id', async (req, res) => {
   if (talkerById) {
     return res.status(200).json(talkerById);
   } 
-    res.status(404).json({
-      message: 'Pessoa palestrante não encontrada',
-    });
+  res.status(404).json({
+    message: 'Pessoa palestrante não encontrada',
+  });
 });
 
 module.exports = router;
