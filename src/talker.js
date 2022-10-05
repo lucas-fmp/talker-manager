@@ -109,6 +109,22 @@ const updateTalker = async (id, updatedTalkerData) => {
   }
 };
 
+const deleteTalker = async (id) => {
+  const oldTalkers = await readTalkerFile();
+  const updatedTalkers = oldTalkers.reduce((talkersList, currentTalker) => {
+    if (currentTalker.id === id) return [...talkersList];
+    return [...talkersList, currentTalker];
+  }, []);
+
+  const updateData = JSON.stringify(updatedTalkers);
+  try {
+    await fs.writeFile('./src/talker.json', updateData);
+    return 204;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   getAllTalkers,
   getTalkerById,
@@ -120,4 +136,5 @@ module.exports = {
   validateTalkRate,
   readTalkerFile,
   updateTalker,
+  deleteTalker,
 };

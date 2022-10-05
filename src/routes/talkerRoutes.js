@@ -12,6 +12,7 @@ const {
   validateTalkRate,
   validateTalk,
   readTalkerFile,
+  deleteTalker,
 } = talker;
 
 router.get('/', async (_req, res) => {
@@ -61,6 +62,12 @@ router.put('/:id',
     const updatedTalker = await talker.updateTalker(Number(id), body);
 
     return res.status(200).json(updatedTalker);
+});
+
+router.delete('/:id', validateTalkerToken, async (req, res) => {
+  const { id } = req.params;
+  const deleteTalkerStatus = await deleteTalker(Number(id));
+  res.sendStatus(deleteTalkerStatus);
 });
 
 module.exports = router;
